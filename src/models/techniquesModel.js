@@ -11,6 +11,7 @@ let techniqueModel = db.define('technique',{
     mid: type.INTEGER,
     source: type.STRING,
     description: type.STRING,
+    plataform: type.STRING,
     tatic_id: type.INTEGER
 },{
     timestamps: true
