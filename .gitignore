@@ -1,5 +1,12 @@
 node_modules
 db.sqlite
+
+ehthumbs.db
+Thumbs.db
 .vscode
 .DS_Store
 .tables
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes

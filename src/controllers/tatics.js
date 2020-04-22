@@ -26,4 +26,5 @@ function newEntry(data){
     });
 }
 
+
 module.exports = {search,newEntry};
