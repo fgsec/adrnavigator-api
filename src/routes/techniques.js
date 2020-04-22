@@ -4,7 +4,6 @@ const controller = require('../controllers/techniques')
 
 
 router.get('/', (request, response, next) => {
-    console.log("im here")
     controller.search().then(data => {
         response.status(200).send(data)
     }).catch(err => {
