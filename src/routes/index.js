@@ -9,7 +9,7 @@ router.get('/', function (req, res, next) {
     });
 });
 
-router.get('/test', function (req, res, next) {
+router.get('/static-import', function (req, res, next) {
     res.status(200).send({
         title: "ADR Navigator API",
         version: "0.0.1"

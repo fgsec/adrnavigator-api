@@ -57,4 +57,19 @@ function getById(id){
     });
 }
 
-module.exports = {search,newEntry,groupByTatic,getById};
+function getVariationsById(id){
+    return new Promise((resolve, reject) => {
+        model.findAll({
+            where: {
+                variation_id:id
+            }
+        }).then(res => {
+            resolve(res);
+        }).catch(err => {            
+            console.log(`error searching techniques: ${err};`);
+            reject(err);
+        })
+    });
+}
+
+module.exports = {search,newEntry,groupByTatic,getById,getVariationsById};
