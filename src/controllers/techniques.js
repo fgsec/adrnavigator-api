@@ -72,4 +72,16 @@ function getVariationsById(id){
     });
 }
 
-module.exports = {search,newEntry,groupByTatic,getById,getVariationsById};
+function updateEntry(id,data){
+    return new Promise((resolve, reject) => {
+        model.update(data,{ where:{ id:id } }).then(res => {
+            resolve(res);
+        }).catch(err => {            
+            console.log(`error updating ${err};`);
+            reject(err);
+        })
+    
+    });
+}
+
+module.exports = {search,newEntry,groupByTatic,getById,getVariationsById,updateEntry};

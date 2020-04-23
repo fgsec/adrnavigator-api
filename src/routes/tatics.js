@@ -40,7 +40,14 @@ router.post('/new', (request, response, next) => {
     }).catch(err => {
         response.status(400).send(err)
     })
-    //next();
+});
+
+router.put('/:id', (request, response, next) => {
+    tatics.updateEntry(request.params.id,request.body).then(data => {
+        response.status(200).send('Tatic updated successfully!')
+    }).catch(err => {
+        response.status(400).send(err)
+    })
 });
 
 module.exports = router;

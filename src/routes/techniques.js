@@ -42,6 +42,14 @@ router.post('/new', (request, response, next) => {
     })
 });
 
+router.put('/:id', (request, response, next) => {
+    techniques.updateEntry(request.params.id,request.body).then(data => {
+        response.status(200).send('Technique updated successfully!')
+    }).catch(err => {
+        response.status(400).send(err)
+    })
+});
+
 
 
 module.exports = router;

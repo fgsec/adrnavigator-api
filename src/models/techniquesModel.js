@@ -5,7 +5,11 @@ let techniqueModel = db.define('technique',{
     id: {
         type: type.INTEGER,
         autoIncrement: true,
-        primaryKey: true
+        primaryKey: true,
+        unique: true,
+        noUpdate : {
+            readOnly: true
+          }
     },
     name: type.STRING,
     mid: type.INTEGER,
