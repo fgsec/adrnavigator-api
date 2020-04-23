@@ -43,6 +43,7 @@ router.post('/new', (request, response, next) => {
 });
 
 router.put('/:id', (request, response, next) => {
+    delete data["id"]; // for some reason, sequileze is allowing the update of ID column
     tatics.updateEntry(request.params.id,request.body).then(data => {
         response.status(200).send('Tatic updated successfully!')
     }).catch(err => {

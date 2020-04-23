@@ -74,6 +74,7 @@ function getVariationsById(id){
 
 function updateEntry(id,data){
     return new Promise((resolve, reject) => {
+        delete data["id"]; // for some reason, sequileze is allowing the update of ID column
         model.update(data,{ where:{ id:id } }).then(res => {
             resolve(res);
         }).catch(err => {            
