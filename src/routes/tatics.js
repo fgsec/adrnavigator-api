@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const controller_tatics = require('../controllers/tatics')
-const controller_techniques = require('../controllers/techniques')
+const tatics = require('../controllers/tatics')
+const techniques = require('../controllers/techniques')
 
 router.get('/', (request, response, next) => {
-    controller_tatics.search().then(data => {
+    tatics.search().then(data => {
         response.status(200).send(data)
     }).catch(err => {
         response.status(400).send(err)
@@ -13,15 +13,29 @@ router.get('/', (request, response, next) => {
 });
 
 router.get('/:id/techniques', (request, response, next) => {
-    controller_techniques.groupByTatic(request.params.id).then(data => {
-        response.status(200).send(data)
+    techniques.groupByTatic(request.params.id).then(data => {
+        status = 404
+        if (data.length) 
+            status = 200
+        response.status(status).send(data)
+    }).catch(err => {
+        response.status(400).send(err)
+    })
+});
+
+router.get('/:id', (request, response, next) => {
+    tatics.getById(request.params.id).then(data => {
+        status = 404
+        if (data.length) 
+            status = 200
+        response.status(status).send(data)
     }).catch(err => {
         response.status(400).send(err)
     })
 });
 
 router.post('/new', (request, response, next) => {
-    controller_tatics.newEntry(request.body).then(data => {
+    tatics.newEntry(request.body).then(data => {
         response.status(200).send('Tatic added successfully!')
     }).catch(err => {
         response.status(400).send(err)

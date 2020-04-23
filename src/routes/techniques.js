@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/techniques')
+const techniques = require('../controllers/techniques')
 
 
 router.get('/', (request, response, next) => {
-    controller.search().then(data => {
+    techniques.search().then(data => {
         response.status(200).send(data)
     }).catch(err => {
         response.status(400).send(err)
@@ -13,12 +13,24 @@ router.get('/', (request, response, next) => {
 });
 
 router.post('/new', (request, response, next) => {
-    controller.newEntry(request.body).then(data => {
+    techniques.newEntry(request.body).then(data => {
         response.status(200).send('Technique added successfully!')
     }).catch(err => {
         response.status(400).send(err)
     })
     //next();
+});
+
+router.get('/:id', (request, response, next) => {
+    techniques.getById(request.params.id).then(data => {
+        status = 404
+        if (data.length) 
+            status = 200
+        response.status(status).send(data)
+        
+    }).catch(err => {
+        response.status(400).send(err)
+    })
 });
 
 module.exports = router;

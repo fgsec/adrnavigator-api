@@ -42,4 +42,19 @@ function groupByTatic(tatic_id){
     });
 }
 
-module.exports = {search,newEntry,groupByTatic};
+function getById(id){
+    return new Promise((resolve, reject) => {
+        model.findAll({
+            where: {
+                id:id
+            }
+        }).then(res => {
+            resolve(res);
+        }).catch(err => {            
+            console.log(`error searching techniques: ${err};`);
+            reject(err);
+        })
+    });
+}
+
+module.exports = {search,newEntry,groupByTatic,getById};
