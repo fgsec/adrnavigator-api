@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const tests = require('../utils/tests');
 
 router.get('/', function (req, res, next) {
     res.status(200).send({
