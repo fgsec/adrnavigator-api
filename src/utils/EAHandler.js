@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const uploadToDB = async () => new Promise((resolve, reject) => {
+const uploadToDB = () => new Promise((resolve, reject) => {
     try {
         fs.readFile(__dirname + "/../data/enterprise-attack.json", (err, data) => {
             if (err)
@@ -32,9 +32,6 @@ const uploadToDB = async () => new Promise((resolve, reject) => {
                     console.log(tatic);
                 }
             });
-
-            await doSomething1();
-            doSomething2();
 
             resolve(techniques);
         });
