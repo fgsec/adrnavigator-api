@@ -11,6 +11,7 @@ router.get('/', function (req, res, next) {
 router.get('/eaupload', function (req, res, next) {
 
     eahandler.uploadToDB().then(data => {
+        console.log("done!")
         res.status(200).send(data)
     }).catch(err => {
         res.status(400).send(err)

@@ -1,17 +1,14 @@
 
 var model = require('../models/taticsModel');
 
-const search = () => {
-    return new Promise((resolve, reject) => {
-        model.findAll({
-            where: {}
-        }).then(res => {
-            resolve(res);
-        }).catch(err => {            
-            console.log(`error searching tatics: ${err};`);
-            reject(err);
-        })
-    });
+const search = async () => {
+
+    try {
+        return await model.findAll({where: {}})
+    } catch(err) {
+        console.log(`error searching tatics: ${err};`)
+    }
+    
 }
 
 const newEntry = (data) => {
