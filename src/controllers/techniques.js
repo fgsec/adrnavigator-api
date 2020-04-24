@@ -1,8 +1,6 @@
 
 var model = require('../models/techniquesModel');
 
-const requiredFields = ['name', 'tatic_id', 'description', 'source']
-
 function search(){
     return new Promise((resolve, reject) => {
         model.findAll({

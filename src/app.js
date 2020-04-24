@@ -1,10 +1,7 @@
 var express = require("express")
-var db = require("../bin/db.js")
 var app = express()
 
 var bodyParser = require('body-parser');
-
-const router = express.Router();
 
 const techniques = require('./routes/techniques');
 const tatics = require('./routes/tatics');
