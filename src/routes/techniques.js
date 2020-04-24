@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const techniques = require('../controllers/techniques')
+const tests = require('../controllers/tests')
 
 router.get('/', (request, response, next) => {
     techniques.search().then(data => {
@@ -12,6 +13,18 @@ router.get('/', (request, response, next) => {
 
 router.get('/:id/variations', (request, response, next) => {
     techniques.getVariationsById(request.params.id).then(data => {
+        status = 404
+        if (data.length) 
+            status = 200
+        response.status(status).send(data)
+        
+    }).catch(err => {
+        response.status(400).send(err)
+    })
+});
+
+router.get('/:id/tests', (request, response, next) => {
+    tests.getByTechnique(request.params.id).then(data => {
         status = 404
         if (data.length) 
             status = 200
@@ -49,7 +62,5 @@ router.put('/:id', (request, response, next) => {
         response.status(400).send(err)
     })
 });
-
-
 
 module.exports = router;

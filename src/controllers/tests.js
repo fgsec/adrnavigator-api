@@ -1,5 +1,5 @@
 
-var model = require('../models/taticsModel');
+var model = require('../models/testsModel');
 
 function search(){
     return new Promise((resolve, reject) => {
@@ -8,7 +8,7 @@ function search(){
         }).then(res => {
             resolve(res);
         }).catch(err => {            
-            console.log(`error searching tatics: ${err};`);
+            console.log(`error searching tests: ${err};`);
             reject(err);
         })
     });
@@ -19,7 +19,7 @@ function newEntry(data){
         model.create(data).then(res => {
             resolve(res);
         }).catch(err => {
-            console.log(`error adding new tatics: ${err};`);
+            console.log(`error adding new test: ${err};`);
             reject(err);
         })
     });
@@ -34,7 +34,22 @@ function getById(id){
         }).then(res => {
             resolve(res);
         }).catch(err => {            
-            console.log(`error returning ID for tatic: ${err};`);
+            console.log(`error searching test: ${err};`);
+            reject(err);
+        })
+    });
+}
+
+function getByTechnique(id){
+    return new Promise((resolve, reject) => {
+        model.findAll({
+            where: {
+                technique_id:id
+            }
+        }).then(res => {
+            resolve(res);
+        }).catch(err => {            
+            console.log(`error searching test: ${err};`);
             reject(err);
         })
     });
@@ -42,6 +57,7 @@ function getById(id){
 
 function updateEntry(id,data){
     return new Promise((resolve, reject) => {
+        delete data["id"]; // for some reason, sequileze is allowing the update of ID column
         model.update(data,{ where:{ id:id } }).then(res => {
             resolve(res);
         }).catch(err => {            
@@ -52,4 +68,4 @@ function updateEntry(id,data){
     });
 }
 
-module.exports = {search,newEntry,getById,updateEntry};
+module.exports = {search,newEntry,getById,updateEntry,getByTechnique};
