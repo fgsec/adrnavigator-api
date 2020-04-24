@@ -1,7 +1,7 @@
 
 var model = require('../models/techniquesModel');
 
-function search(){
+const search = () => {
     return new Promise((resolve, reject) => {
         model.findAll({
             where: {}
@@ -14,7 +14,7 @@ function search(){
     });
 }
 
-function newEntry(data){
+const newEntry = (data) => {
     return new Promise((resolve, reject) =>{
         model.create(data).then(res => {
             resolve(res);
@@ -25,7 +25,7 @@ function newEntry(data){
     });
 }
 
-function groupByTatic(tatic_id){
+const groupByTatic = (tatic_id) => {
     return new Promise((resolve, reject) => {
         model.findAll({
             where: {
@@ -40,7 +40,7 @@ function groupByTatic(tatic_id){
     });
 }
 
-function getById(id){
+const getById = (id) => {
     return new Promise((resolve, reject) => {
         model.findAll({
             where: {
@@ -55,7 +55,7 @@ function getById(id){
     });
 }
 
-function getVariationsById(id){
+const getVariationsById = (id) => {
     return new Promise((resolve, reject) => {
         model.findAll({
             where: {
@@ -70,7 +70,7 @@ function getVariationsById(id){
     });
 }
 
-function updateEntry(id,data){
+const updateEntry = (id,data) => {
     return new Promise((resolve, reject) => {
         delete data["id"]; // for some reason, sequileze is allowing the update of ID column
         model.update(data,{ where:{ id:id } }).then(res => {

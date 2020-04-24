@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 
-function uploadToDB(){
+const uploadToDB = () => {
     return new Promise((resolve, reject) => {
         try {
 
@@ -15,14 +15,7 @@ function uploadToDB(){
                 eafile = JSON.parse(data).objects;
                 eafile.forEach(obj => {
 
-                    // Gather only techniques
                     if (obj.type === "attack-pattern") {
-
-                        /*
-                        "kill_chain_phases" is an array with two keys, this two lines are responsable for breaking 
-                        the array and generating a list with only our desired value
-                        */
-
                         tatics_temp_array = new Array()
                         obj.kill_chain_phases.forEach(item => {tatics_temp_array.push(item.phase_name)})
 
@@ -36,6 +29,7 @@ function uploadToDB(){
                         };
                         techniques.push(technique)
                         console.log(technique)
+
                     } else if(obj.type === "x-mitre-tactic") {
                         tatic = {
                             name: obj.name,
