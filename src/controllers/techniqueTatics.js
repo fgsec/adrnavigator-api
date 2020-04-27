@@ -32,7 +32,7 @@ const getByTechniqueId = (id) => {
     return new Promise((resolve, reject) => {
         model.findAll({
             where: {
-                tatic_id:id
+                technique_id:id
             }
         }).then(res => {
             resolve(res);

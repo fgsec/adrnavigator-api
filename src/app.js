@@ -12,10 +12,15 @@ const index = require('./routes/index');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use('/', index);
-app.use('/manage', manage);
-app.use('/techniques', techniques);
-app.use('/tatics', tatics);
-app.use('/tests', tests);
+app.use(function (req, res, next) {
+    console.log('Time:', Date.now())
+    next()
+  })
+  
+app.use('/api/', index);
+app.use('/api/manage', manage);
+app.use('/api/techniques', techniques);
+app.use('/api/tatics', tatics);
+app.use('/api/tests', tests);
 
 module.exports = app;
