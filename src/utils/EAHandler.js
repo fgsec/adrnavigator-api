@@ -1,6 +1,7 @@
 const fs = require('fs');
 const tatics_controller = require('../controllers/tatics');
-const techniques_controller = require('../controllers/tatics');
+const techniques_controller = require('../controllers/techniques');
+const techniqueTatics_controller = require('../controllers/techniqueTatics');
 
 const uploadToDB = async () => new Promise((resolve, reject) => {
     
@@ -38,31 +39,30 @@ const uploadToDB = async () => new Promise((resolve, reject) => {
                         description: obj.description,
                         short_name: obj.x_mitre_shortname,
                     };
-                    tatics[obj.name] = tatic;
+                    tatics[obj.x_mitre_shortname] = tatic;
                 }
             });
 
             // Persist information on database
 
             id_value = 1
-            let tatics_db = new Array();
+            const tatics_db = {};
             
             for (var obj in tatics) {
+            
                 obj_tatic = tatics[obj]
+                tatics_db[obj_tatic.short_name] = id_value;
+                id_value++
                 tatics_controller.newEntry({ name: obj_tatic.name, description: obj_tatic.description }).then(data => {
                     console.log(`New tatic on DB: ${obj_tatic.name} `)
-                    tatics_db.push({ id: id_value, name: obj_tatic.name });
-                    id_value++
                 }).catch(err => {
                     console.log(`Error adding tatic on DB: ${obj_tatic.name} `)
                 })
+                
             }
-        
+
 
             techniques.forEach(obj => {
-                technique_tatics = obj.tatic_temp.split(";")
-               // console.log(technique_tatics)
-                /*
 
                 techniques_controller.newEntry({
                     "name": obj.name,
@@ -73,17 +73,26 @@ const uploadToDB = async () => new Promise((resolve, reject) => {
                     "tatic_id": 2
                 }).then(data => {
                     console.log(`New technique on DB: ${obj.name} `)
-                    tatics_db.push({ id: id_value, name: obj.name });
-                    id_value++
+                    technique_tatics = obj.tatic_temp.split(";")
+                    for (var technique_tatic in technique_tatics) {
+                        tatic_entry_id = tatics_db[technique_tatics[technique_tatic]]
+                        technique_entry_id = data.id
+                        techniqueTatics_controller.newEntry({ technique_id: technique_entry_id, tatic_id: tatic_entry_id }).then(data => {
+                            console.log(`created relantionship between tatic_id ${tatic_entry_id} and technique_id ${technique_entry_id} `)
+                        }).catch(err => {
+                            console.log(`Error creating relationship:`)
+                        })
+
+                    }
                 }).catch(err => {
                     console.log(`Error adding technique on DB: ${tatics_data.name} `)
                 })
-
-                */
+               
+            
                 
             })
 
-            console.log(tatics_db)
+            //console.log(tatics)
 
             resolve("ok");
         });
