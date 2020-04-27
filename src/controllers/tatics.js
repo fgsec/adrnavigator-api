@@ -49,4 +49,5 @@ const updateEntry = (id,data) => {
     });
 }
 
+
 module.exports = {search,newEntry,getById,updateEntry};

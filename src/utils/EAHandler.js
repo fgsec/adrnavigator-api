@@ -4,7 +4,6 @@ const techniques_controller = require('../controllers/techniques');
 const techniqueTatics_controller = require('../controllers/techniqueTatics');
 
 
-
 const getEAFile = () => new Promise( async (resolve, reject) => {
     fs.readFile(__dirname + "/../data/enterprise-attack.json", (err, data) => {
         if (err) 
