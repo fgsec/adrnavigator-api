@@ -1,56 +1,43 @@
 
-var model = require('../models/techniquesModel');
+var model = require('../models/techniqueTaticsModel');
 
-const search = () => {
-    return new Promise((resolve, reject) => {
-        model.findAll({
-            where: {}
-        }).then(res => {
-            resolve(res);
-        }).catch(err => {            
-            console.log(`error searching techniques: ${err};`);
-            reject(err);
-        })
-    });
-}
 
 const newEntry = (data) => {
     return new Promise((resolve, reject) =>{
         model.create(data).then(res => {
             resolve(res);
         }).catch(err => {
-            console.log(`error adding new technique: ${err};`);
+            console.log(`error adding new relationship between technique and tatic : ${err};`);
             reject(err);
         })
     });
 }
 
-
-const getById = (id) => {
+const getByTaticId = (id) => {
     return new Promise((resolve, reject) => {
         model.findAll({
             where: {
-                id:id
+                tatic_id:id
             }
         }).then(res => {
             resolve(res);
         }).catch(err => {            
-            console.log(`error searching techniques: ${err};`);
+            console.log(`error returning techniques for tatic: ${err};`);
             reject(err);
         })
     });
 }
 
-const getVariationsById = (id) => {
+const getByTechniqueId = (id) => {
     return new Promise((resolve, reject) => {
         model.findAll({
             where: {
-                variation_id:id
+                tatic_id:id
             }
         }).then(res => {
             resolve(res);
         }).catch(err => {            
-            console.log(`error searching techniques: ${err};`);
+            console.log(`error returning techniques for technique: ${err};`);
             reject(err);
         })
     });
@@ -58,7 +45,6 @@ const getVariationsById = (id) => {
 
 const updateEntry = (id,data) => {
     return new Promise((resolve, reject) => {
-        delete data["id"]; // for some reason, sequileze is allowing the update of ID column
         model.update(data,{ where:{ id:id } }).then(res => {
             resolve(res);
         }).catch(err => {            
@@ -69,4 +55,4 @@ const updateEntry = (id,data) => {
     });
 }
 
-module.exports = {search,newEntry,getById,getVariationsById,updateEntry};
+module.exports = {newEntry,getByTaticId,getByTechniqueId,updateEntry};

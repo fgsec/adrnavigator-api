@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const tatics = require('../controllers/tatics')
-const techniques = require('../controllers/techniques')
+const techniqueTatics = require('../controllers/techniqueTatics')
 
 router.get('/', (request, response, next) => {
     tatics.search().then(data => {
@@ -13,7 +13,7 @@ router.get('/', (request, response, next) => {
 });
 
 router.get('/:id/techniques', (request, response, next) => {
-    techniques.groupByTatic(request.params.id).then(data => {
+    techniqueTatics.getByTaticId(request.params.id).then(data => {
         status = 404
         if (data.length) 
             status = 200
