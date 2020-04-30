@@ -3,10 +3,35 @@ const router = express.Router();
 const techniques = require('../controllers/techniques')
 const tests = require('../controllers/tests')
 const techniqueTatics = require('../controllers/techniqueTatics')
+const riskhandler = require('../utils/riskHandler');
 
 router.get('/', (request, response, next) => {
     techniques.search().then(data => {
         response.status(200).send(data)
+    }).catch(err => {
+        response.status(400).send(err)
+    })
+});
+
+router.get('/:id/tatics', (request, response, next) => {
+    techniqueTatics.getByTechniqueId(request.params.id).then(data => {
+        status = 404
+        if (data.length) 
+            status = 200
+        response.status(status).send(data)
+        
+    }).catch(err => {
+        response.status(400).send(err)
+    })
+});
+
+router.get('/:id/risk', (request, response, next) => {
+    riskhandler.getOverallRiskByTechnique(request.params.id).then(data => {
+        status = 404
+        if (data.length) 
+            status = 200
+        response.status(status).send(data)
+        
     }).catch(err => {
         response.status(400).send(err)
     })
@@ -87,5 +112,7 @@ router.put('/:id', (request, response, next) => {
         response.status(400).send(err)
     })
 });
+
+
 
 module.exports = router;

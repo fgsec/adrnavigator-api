@@ -29,7 +29,6 @@ const newEntry = (data) => {
 
 }
 
-
 const getById = (id) => {
     return new Promise((resolve, reject) => {
         model.findAll({

@@ -4,6 +4,7 @@ const techniques_controller = require('../controllers/techniques');
 const techniqueTatics_controller = require('../controllers/techniqueTatics');
 const tests_controller = require('../controllers/tests');
 
+
 const exportView = () => {
 
     return Promise.all([techniques_controller.search(), tatics_controller.search()]).then( async values => {
