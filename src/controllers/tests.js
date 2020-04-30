@@ -45,7 +45,22 @@ const getByTechnique = (id) => {
         model.findAll({
             where: {
                 technique_id:id
-            }
+            }, order: [['execution_date', 'DESC']]
+        }).then(res => {
+            resolve(res);
+        }).catch(err => {            
+            console.log(`error searching test: ${err};`);
+            reject(err);
+        })
+    });
+}
+
+const getMostRecentByTechnique = (id) => {
+    return new Promise((resolve, reject) => {
+        model.findOne({
+            where: {
+                technique_id:id
+            }, order: [['execution_date', 'DESC']]
         }).then(res => {
             resolve(res);
         }).catch(err => {            
@@ -68,4 +83,4 @@ const updateEntry = (id,data) => {
     });
 }
 
-module.exports = {search,newEntry,getById,updateEntry,getByTechnique};
+module.exports = {search,newEntry,getById,updateEntry,getByTechnique,getMostRecentByTechnique};

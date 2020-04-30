@@ -48,6 +48,18 @@ router.get('/:id/tests', (request, response, next) => {
     })
 });
 
+router.get('/:id/tests/recent', (request, response, next) => {
+    tests.getMostRecentByTechnique(request.params.id).then(data => {
+        status = 404
+        if (data.length) 
+            status = 200
+        response.status(status).send(data)
+        
+    }).catch(err => {
+        response.status(400).send(err)
+    })
+});
+
 router.get('/:id', (request, response, next) => {
     techniques.getById(request.params.id).then(data => {
         status = 404

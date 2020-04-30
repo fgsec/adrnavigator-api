@@ -6,22 +6,17 @@ const tests_controller = require('../controllers/tests');
 
 const exportView = () => {
 
-    return Promise.all([techniques_controller.search(), tests_controller.search(), tatics_controller.search()]).then( async values => {
+    return Promise.all([techniques_controller.search(), tatics_controller.search()]).then( async values => {
         
         const result_set = new Array();
 
         techniques = values[0]
-        tests = values[1]
-        tatics = values[2]
+        tatics = values[1]
 
-        const getLastTestForTechnique = (technique,tests) => {
+        const getLastTestForTechnique = async (technique) => {
             const technique_tests = new Array()
-            for(key in tests) {
-                if(tests[key].technique_id === technique.id)  {
-                    technique_tests.push(tests[key])
-                }
-            }
-            return { test: technique_tests[technique_tests.length-1] , technique: technique}
+            last_test = await tests_controller.getMostRecentByTechnique(technique.id)
+            return { test: last_test , technique: technique}
         }
 
         const getTatics = async (technique_id,tatics) => {
@@ -29,13 +24,11 @@ const exportView = () => {
             tatics_result = new Array()
             tatics_relationship = await techniqueTatics_controller.getByTechniqueId(technique_id)
             for(key_tr in tatics_relationship) {
-
                 for(key_t in tatics) {
                     if(tatics[key_t].id === tatics_relationship[key_tr].tatic_id) {
                         tatics_result.push(tatics[key_t].name)
                     }
                 }
-
             }
             return tatics_result
                 
@@ -43,10 +36,12 @@ const exportView = () => {
 
         for(key in techniques) {
         
-            technique_test = await getLastTestForTechnique(techniques[key],tests)
-
+            technique_test = await getLastTestForTechnique(techniques[key])
             if(technique_test.test) {
-                technique_tatics = await getTatics(technique_test.technique.id,tatics)
+                if(!technique_test.technique.variation_id)
+                    technique_tatics = await getTatics(technique_test.technique.id,tatics)
+                else
+                    technique_tatics = await getTatics(technique_test.technique.variation_id,tatics)
                 
                 technique_tatics_array = new Array()
                 for(key_tt in technique_tatics) {
@@ -58,7 +53,6 @@ const exportView = () => {
                     tatics: technique_tatics_array
                 }
                 result_set.push(result)
-                
             }
                 
         }
@@ -71,22 +65,17 @@ const exportView = () => {
 
 const createJSONView = () => {
 
-    return Promise.all([techniques_controller.search(), tests_controller.search(), tatics_controller.search()]).then( async values => {
+    return Promise.all([techniques_controller.search(), tatics_controller.search()]).then( async values => {
         
         const result_set = new Array();
 
         techniques = values[0]
-        tests = values[1]
-        tatics = values[2]
+        tatics = values[1]
 
-        const getLastTestForTechnique = (technique,tests) => {
+        const getLastTestForTechnique = async (technique) => {
             const technique_tests = new Array()
-            for(key in tests) {
-                if(tests[key].technique_id === technique.id)  {
-                    technique_tests.push(tests[key])
-                }
-            }
-            return { test: technique_tests[technique_tests.length-1] , technique: technique}
+            last_test = await tests_controller.getMostRecentByTechnique(technique.id)
+            return { test: last_test , technique: technique}
         }
 
         const getTatics = async (technique_id,tatics) => {
@@ -108,7 +97,7 @@ const createJSONView = () => {
 
         for(key in techniques) {
         
-            technique_test = await getLastTestForTechnique(techniques[key],tests)
+            technique_test = await getLastTestForTechnique(techniques[key])
 
             if(technique_test.test) {
                 technique_tatics = await getTatics(technique_test.technique.id,tatics)
