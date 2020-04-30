@@ -37,11 +37,16 @@ const exportView = () => {
         for(key in techniques) {
         
             technique_test = await getLastTestForTechnique(techniques[key])
+
             if(technique_test.test) {
+
+                let variation_id = 0
                 if(!technique_test.technique.variation_id)
-                    technique_tatics = await getTatics(technique_test.technique.id,tatics)
+                    variation_id = technique_test.technique.id
                 else
-                    technique_tatics = await getTatics(technique_test.technique.variation_id,tatics)
+                    variation_id = technique_test.technique.variation_id
+
+                technique_tatics = await getTatics(variation_id,tatics)
                 
                 technique_tatics_array = new Array()
                 for(key_tt in technique_tatics) {
