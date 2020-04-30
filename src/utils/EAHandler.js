@@ -38,7 +38,7 @@ const uploadToDB = () => new Promise( async (resolve, reject) => {
                     mid: obj.external_references[0].external_id,
                     source: obj.external_references[0].source_name,
                     description: obj.description,
-                    plataform: (obj.x_mitre_platforms).join(";"),
+                    plataform: (obj.x_mitre_platforms).join(", "),
                     tatic_temp: tatics_temp_array.join(";")
                 };
                 techniques.push(technique);

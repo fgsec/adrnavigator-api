@@ -18,6 +18,7 @@ let testsModel = db.define('test',{
     mttd: type.DATE,
     mttr: type.DATE,
     status: type.INTEGER,
+    visible: type.INTEGER,
     team: type.STRING
 },{
     timestamps: true

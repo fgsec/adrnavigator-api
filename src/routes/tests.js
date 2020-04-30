@@ -23,6 +23,7 @@ router.get('/:id', (request, response, next) => {
 });
 
 router.post('/new', (request, response, next) => {
+    
     tests.newEntry(request.body).then(data => {
         response.status(200).send('Test added successfully!')
     }).catch(err => {

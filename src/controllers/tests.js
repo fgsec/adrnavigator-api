@@ -4,7 +4,7 @@ var model = require('../models/testsModel');
 const search = () => {
     return new Promise((resolve, reject) => {
         model.findAll({
-            where: {}
+            where: { }
         }).then(res => {
             resolve(res);
         }).catch(err => {            

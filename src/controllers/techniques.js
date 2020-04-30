@@ -1,5 +1,6 @@
 
 var model = require('../models/techniquesModel');
+var model_tt = require('../models/techniqueTaticsModel');
 
 const search = () => {
     return new Promise((resolve, reject) => {
@@ -16,13 +17,16 @@ const search = () => {
 
 const newEntry = (data) => {
     return new Promise((resolve, reject) =>{
+
         model.create(data).then(res => {
             resolve(res);
         }).catch(err => {
             console.log(`error adding new technique: ${err};`);
             reject(err);
         })
+
     });
+
 }
 
 
