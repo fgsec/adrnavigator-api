@@ -29,13 +29,16 @@ const getOverallRiskByTechnique = async (technique_id) => {
 
                 final_risk = 0
                 for(key_r in result_risk_calculator) {
-                    if(result_risk_calculator[key_r] != 0)
+                    if(result_risk_calculator[key_r] == 1 || result_risk_calculator[key_r] == 3)
                         final_risk += 1
                 }
 
                 result_sum = 0
                 if(result_risk_calculator.length === final_risk)
                     result_sum = 1
+                
+                if(final_risk > 0 && result_sum == 0)
+                    result_sum = 4
 
                 resolve({"result" : result_sum, why: `(${result_risk_calculator.length} != ${final_risk})`})
 

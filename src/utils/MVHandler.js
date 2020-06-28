@@ -3,7 +3,7 @@ const tatics_controller = require('../controllers/tatics');
 const techniques_controller = require('../controllers/techniques');
 const techniqueTatics_controller = require('../controllers/techniqueTatics');
 const tests_controller = require('../controllers/tests');
-
+const risk_handler = require('./riskHandler');
 
 const exportView = () => {
 
@@ -15,7 +15,6 @@ const exportView = () => {
         tatics = values[1]
 
         const getLastTestForTechnique = async (technique) => {
-            const technique_tests = new Array()
             last_test = await tests_controller.getMostRecentByTechnique(technique.id)
             return { test: last_test , technique: technique}
         }
@@ -41,6 +40,8 @@ const exportView = () => {
 
             if(technique_test.test) {
 
+                last_test_risk = await risk_handler.getOverallRiskByTechnique(technique_test.technique.id)
+
                 let variation_id = 0
                 if(!technique_test.technique.variation_id)
                     variation_id = technique_test.technique.id
@@ -56,7 +57,8 @@ const exportView = () => {
                 result = { 
                     technique: technique_test.technique,
                     test: technique_test.test,
-                    tatics: technique_tatics_array
+                    tatics: technique_tatics_array,
+                    risk: last_test_risk
                 }
                 result_set.push(result)
             }
@@ -107,11 +109,16 @@ const createJSONView = () => {
 
             if(technique_test.test) {
                 technique_tatics = await getTatics(technique_test.technique.id,tatics)
-                
+                last_test_risk = await risk_handler.getOverallRiskByTechnique(technique_test.technique.id)
+
                 for(key_tt in technique_tatics) {
+
                     color = "#00FF00"
-                    if(technique_test.test.result === 0)
+                    if(last_test_risk.result === 4)
+                        color = "#FFA500"
+                    if(last_test_risk.result === 0)
                         color = "#FF0000"
+
                     result = { 
                         "techniqueID": technique_test.technique.mid,
                         "tactic": (technique_tatics[key_tt]).replace(" ","-").toLowerCase(),
