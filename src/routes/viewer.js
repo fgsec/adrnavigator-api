@@ -11,7 +11,11 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/all', function (req, res, next) {
-    mvhandler.exportView().then(data => {
+    res.status(200).json(req.app.locals.easy_view);     
+});
+
+router.get('/tests', function (req, res, next) {
+    mvhandler.getTestsView().then(data => {
         res.status(200).send(data);
     })
     

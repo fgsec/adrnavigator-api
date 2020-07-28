@@ -25,6 +25,7 @@ router.get('/:id', (request, response, next) => {
 router.post('/new', (request, response, next) => {
     
     tests.newEntry(request.body).then(data => {
+        request.app.locals.updateViewCache();
         response.status(200).send('Test added successfully!')
     }).catch(err => {
         response.status(400).send(err)
@@ -33,6 +34,7 @@ router.post('/new', (request, response, next) => {
 
 router.put('/:id', (request, response, next) => {
     tests.updateEntry(request.params.id,request.body).then(data => {
+        request.app.locals.updateViewCache();
         response.status(200).send('Test updated successfully!')
     }).catch(err => {
         response.status(400).send(err)

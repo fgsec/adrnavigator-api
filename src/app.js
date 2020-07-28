@@ -9,14 +9,24 @@ const tatics = require('./routes/tatics');
 const viewer = require('./routes/viewer');
 const tests = require('./routes/tests');
 const index = require('./routes/index');
+const mvhandler = require('./utils/MVHandler');
 
 let preroute = "/api"
+
+// Create & execute first cache for JSON view
+function updateViewCache() {
+    mvhandler.exportView().then(data => {
+        app.locals.easy_view = data;
+    })
+}
+app.locals.updateViewCache = updateViewCache;
+app.locals.updateViewCache();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(function (req, res, next) {
-    console.log('Time:', Date.now())
+    console.log('Time_X:', Date.now())
     next()
 })
 

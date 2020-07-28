@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon ./bin/server.js",
+    "start": "/usr/local/bin/nodemon ./bin/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "fgsec",
@@ -13,10 +13,10 @@
     "express": "^4.17.1",
     "md5": "^2.2.1",
     "moment": "^2.25.0",
-    "nodemon": "^2.0.3",
     "promise": "^8.1.0",
-    "sequelize": "^5.21.6",
+    "sequelize": "^5.22.3",
     "sequelize-noupdate-attributes": "^1.0.0",
+    "sqlite": "^4.0.11",
     "sqlite3": "^4.1.1"
   }
 }

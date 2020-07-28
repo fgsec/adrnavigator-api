@@ -60,6 +60,7 @@ const exportView = () => {
                     tatics: technique_tatics_array,
                     risk: last_test_risk
                 }
+               
                 result_set.push(result)
             }
                 
@@ -179,5 +180,17 @@ const getJSONBase = (techniques) => {
     return base
 }
 
+const getTestsView = () => {
 
-module.exports = {createJSONView,exportView}
+    return Promise.all([tests_controller.search()]).then( async values => {
+        tests = values[0]
+        for (test_key in tests) {
+            console.log(tests[test_key].id)
+        }
+    })
+
+}
+
+
+
+module.exports = {createJSONView,exportView,getTestsView}

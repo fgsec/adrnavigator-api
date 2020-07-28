@@ -28,17 +28,23 @@ const uploadToDB = () => new Promise( async (resolve, reject) => {
         })
         
         // Iterate over all entries and stores only techniques and tatics
-        console.log(eafile)
+  
         eafile.forEach(obj => {
-            if (obj.type === "attack-pattern") {
+            
+            if (obj.type === "attack-pattern" && obj.description) {
                 let tatics_temp_array = new Array();
-                obj.kill_chain_phases.forEach(item => { tatics_temp_array.push(item.phase_name); });
+                if (obj.kill_chain_phases) {
+                    obj.kill_chain_phases.forEach(item => { 
+                        tatics_temp_array.push(item.phase_name); 
+                    });
+                }
+                
                 technique = {
                     name: obj.name,
                     mid: obj.external_references[0].external_id,
                     source: obj.external_references[0].source_name,
                     description: obj.description,
-                    plataform: (obj.x_mitre_platforms).join(", "),
+                    plataform: (obj.x_mitre_platforms) ? (obj.x_mitre_platforms).join(", ") : "",
                     tatic_temp: tatics_temp_array.join(";")
                 };
                 techniques.push(technique);
